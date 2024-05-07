@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native'
 import React from 'react'
 import { colors } from '../constants/colors';
 
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         display: "flex",
         width: "100%",
-        marginTop: 55,
+        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         alignItems: "center",
         padding: 20,
         borderBottomWidth: 1,

@@ -5,9 +5,10 @@ import { perdidos } from '../data/perdidos'
 import Card from '../components/Card'
 import Filter from '../components/Filter'
 
-const Home = () => {
+const Home = ({route, navigation}) => {
 
-    console.log(perdidos);
+    console.log(route);
+
     return (
         <View style={styles.homeContainer}>
         <Filter />
@@ -16,9 +17,10 @@ const Home = () => {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({item}) => {
                 return (
-                    <Card item={item} />
+                    <Card item={item} navigation={navigation} />
                 )
             }}
+            style={styles.listContainer}
         />
         </View>
     )
@@ -32,5 +34,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         borderRadius: 10,
         margin: 20,
+    },
+    listContainer: {
+        width: "100%"
     }
 })

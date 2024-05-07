@@ -1,14 +1,12 @@
-import { View, StyleSheet } from "react-native";
-import Header from "./src/components/Header";
-import Home from "./src/screens/Home";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { colors } from "./src/constants/colors";
+import Navigation from "./src/navigator/Navigation";
 
 const App = () => {
   return(
-    <View style={styles.container}>
-      <Header title="Petfinder" />
-      <Home />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Navigation />
+    </SafeAreaView>
   )
 }
 

@@ -4,20 +4,26 @@ import {converSize} from '../helpers/converSize'
 import { convertDate } from '../helpers/convertDate'
 import { colors } from '../constants/colors'
 
-const Card = ({item}) => {
+const Card = ({item, navigation}) => {
 
-    const {breed, size, color, date_lost} = item
+    const {breed, size, color, date_lost, id} = item;
+    
     return (
         <>
             <View style={styles.cardContainer}>
                 <Image source={{uri: "https://placehold.co/100x100"}} style={{width: 100, height: 100}} />
-                <View>
+                <View style={styles.cardContainerText}>
                     <Text><Text style={styles.cardTitleItem}>Raza:</Text> { breed }</Text>
                     <Text><Text style={styles.cardTitleItem}>Tamaño:</Text> { converSize(size) }</Text>
                     <Text><Text style={styles.cardTitleItem}>Color:</Text> { color }</Text>
                     <Text><Text style={styles.cardTitleItem}>Perdido:</Text> {convertDate(date_lost)}</Text>
                     <View>
-                        <TouchableOpacity style={styles.cardButton}>
+                        <TouchableOpacity 
+                            style={styles.cardButton}
+                            onPress={() => {
+                                navigation.navigate("Pet", {id: id})
+                            }}
+                        >
                             <Text style={styles.cardButtonText}>Ver ficha</Text>
                         </TouchableOpacity>
                     </View>
@@ -35,7 +41,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         columnGap: 10,
         alignItems: "center",
-        marginBottom: 30
+        marginBottom: 30,
+    },
+    cardContainerText: {
+        flex: 1
     },
     cardImageItem: {
         width: 100,
