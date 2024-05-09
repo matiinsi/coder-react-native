@@ -3,9 +3,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
 import React from 'react'
 
-const Pet = ({route, navigation}) => {
+const PetDetail = ({route, navigation}) => {
 
-    const {id} = route.params;
+    const { id } = route.params;
     
     return (
         <View style={styles.petContainer}>
@@ -20,7 +20,7 @@ const Pet = ({route, navigation}) => {
     )
 }
 
-export default Pet
+export default PetDetail
 
 const styles = StyleSheet.create({
     petContainer: {

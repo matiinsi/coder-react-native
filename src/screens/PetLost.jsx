@@ -1,11 +1,11 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { colors } from '../constants/colors'
 import { perdidos } from '../data/perdidos'
 import Card from '../components/Card'
 import Filter from '../components/Filter'
 
-const Home = ({route, navigation}) => {
+const PetLost = ({route, navigation}) => {
 
     console.log(route);
 
@@ -26,7 +26,7 @@ const Home = ({route, navigation}) => {
     )
 }
 
-export default Home
+export default PetLost
 
 const styles = StyleSheet.create({
     homeContainer: {

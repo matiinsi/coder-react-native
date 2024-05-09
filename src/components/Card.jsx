@@ -21,7 +21,7 @@ const Card = ({item, navigation}) => {
                         <TouchableOpacity 
                             style={styles.cardButton}
                             onPress={() => {
-                                navigation.navigate("Pet", {id: id})
+                                navigation.navigate("PetDetail", {id})
                             }}
                         >
                             <Text style={styles.cardButtonText}>Ver ficha</Text>
