@@ -1,0 +1,1 @@
+export const baseUrl = "https://coder-react-native-1a906-default-rtdb.firebaseio.com/";

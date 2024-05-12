@@ -5,7 +5,7 @@ export const sizes = [
     },
     {
         "label": "Mediano",
-        "value": "mediaum"
+        "value": "medium"
     },
     {
         "label": "Grande",

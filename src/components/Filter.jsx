@@ -3,17 +3,32 @@ import { StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-nativ
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { colors } from '../constants/colors';
 import FilterModal from './FilterModal';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterLost } from '../features/pets/petsSlice';
 
 const Filter = () => {
+
+    const dispatch = useDispatch();
+    const filterLost = useSelector(state => state.pets.value.filterLost)
 
     const [showModalFilter, setShowModalFilter] = useState(false);
     const [breedSelected, setBreedSelected] = useState("");
     const [sizeSelected, setSizeSelected] = useState("");
+    const [petSelected, setPetSelected] = useState("");
 
     const handleShowFilter = () => {
         setShowModalFilter(!showModalFilter);
     }
+
+    useEffect(() => {
+        dispatch(setFilterLost(
+            {...filterLost, 
+                breed: breedSelected, 
+                size: sizeSelected,
+                petType: petSelected
+            }
+        ));
+    }, [breedSelected, sizeSelected]);
 
     return (
         <View style={styles.filterContainer}>
@@ -29,6 +44,8 @@ const Filter = () => {
                         breedSelected={breedSelected}
                         setSizeSelected={setSizeSelected}
                         sizeSelected={sizeSelected}
+                        petSelected={petSelected}
+                        setPetSelected={setPetSelected}
                     />
                 )
             }

@@ -7,8 +7,6 @@ import Filter from '../components/Filter'
 
 const PetLost = ({route, navigation}) => {
 
-    console.log(route);
-
     return (
         <View style={styles.homeContainer}>
         <Filter />

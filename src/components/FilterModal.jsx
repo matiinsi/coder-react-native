@@ -3,14 +3,38 @@ import { StyleSheet, Modal, View, TouchableOpacity, Text } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { colors } from '../constants/colors';
-import { breeds } from '../data/breeds';
 import { sizes } from '../data/sizes';
+import { useDispatch } from 'react-redux';
+import { setCleanFilterLost } from '../features/pets/petsSlice';
+import { useGetBreedsByPetTypeQuery } from '../services/petsServices';
+import DropdownPetsType from './DropdownPetsType';
+import DropdownBreeds from './DropdownBreeds';
 
-const FilterModal = ({setShowModalFilter, setBreedSelected, breedSelected, setSizeSelected, sizeSelected}) => {
+const FilterModal = ({
+        setShowModalFilter, 
+        setBreedSelected, 
+        breedSelected, 
+        setSizeSelected, 
+        sizeSelected,
+        petSelected,
+        setPetSelected
+    }) => {
+
     const [isFocus, setIsFocus] = useState(false);
 
-    const handleFilterSubmit = () => {
-        console.log("Filtrado");
+    const dispatch = useDispatch();
+
+    const handleFilterSubmit = (breed = '', size = '', petType = '') => {
+        setBreedSelected(breed);
+        setSizeSelected(size);
+        setShowModalFilter(false);
+        setPetSelected(petType);
+    }
+
+    const handleCleanFilter = () => {
+        dispatch(setCleanFilterLost());
+        setBreedSelected('');
+        setSizeSelected('');
         setShowModalFilter(false);
     }
 
@@ -27,28 +51,27 @@ const FilterModal = ({setShowModalFilter, setBreedSelected, breedSelected, setSi
             <View style={styles.formContainer}>
                 <View>
                     <View style={styles.formGroup}>
-                        <Text style={styles.titleFormGroup}>Raza</Text>
-                        <Dropdown
-                            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            iconStyle={styles.iconStyle}
-                            data={breeds}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder={!isFocus ? 'Selecciona' : '...'}
-                            searchPlaceholder="Buscar..."
-                            value={breedSelected}
-                            onFocus={() => setIsFocus(true)}
-                            onBlur={() => setIsFocus(false)}
-                            onChange={item => {
-                                setBreedSelected(item.value);
-                                setIsFocus(false);
-                            }}
+                        <Text style={styles.titleFormGroup}>Mascota</Text>
+                        <DropdownPetsType
+                            isFocus={isFocus}
+                            setIsFocus={setIsFocus} 
+                            handleFilterSubmit={handleFilterSubmit} 
+                            breedSelected={breedSelected} 
+                            sizeSelected={sizeSelected} 
+                            petSelected={petSelected}
                         />
+                    </View>
+                    <View style={styles.formGroup}>
+                        <Text style={styles.titleFormGroup}>Raza</Text>
+                        <DropdownBreeds 
+                            isFocus={isFocus}
+                            setIsFocus={setIsFocus} 
+                            handleFilterSubmit={handleFilterSubmit} 
+                            breedSelected={breedSelected} 
+                            sizeSelected={sizeSelected} 
+                            petSelected={petSelected}
+                        />
+
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.titleFormGroup}>Tamaño</Text>
@@ -69,7 +92,7 @@ const FilterModal = ({setShowModalFilter, setBreedSelected, breedSelected, setSi
                             onFocus={() => setIsFocus(true)}
                             onBlur={() => setIsFocus(false)}
                             onChange={item => {
-                                setSizeSelected(item.value);
+                                handleFilterSubmit(breedSelected, item.value, petSelected)
                                 setIsFocus(false);
                             }}
                         />
@@ -78,9 +101,9 @@ const FilterModal = ({setShowModalFilter, setBreedSelected, breedSelected, setSi
                 <View style={styles.formGroupButtonContainer}>
                     <TouchableOpacity 
                         style={styles.buttonFormGroup}
-                        onPress={handleFilterSubmit}
+                        onPress={handleCleanFilter}
                     >
-                        <Text style={styles.textButtonFormGroup}>Aplicar</Text>
+                        <Text style={styles.textButtonFormGroup}>Limpiar Filtros</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -132,7 +155,7 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     buttonFormGroup: {
-        backgroundColor: colors.blue,
+        backgroundColor: colors.red,
         padding: 10,
         borderRadius: 10,
         position: "relative",
@@ -148,17 +171,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 16,
       },
-      dropdown: {
+    dropdown: {
         height: 50,
         borderColor: 'gray',
         borderWidth: 0.5,
         borderRadius: 8,
         paddingHorizontal: 8,
-      },
-      icon: {
+    },
+    icon: {
         marginRight: 5,
-      },
-      label: {
+    },
+    label: {
         position: 'absolute',
         backgroundColor: 'white',
         left: 22,
@@ -166,19 +189,19 @@ const styles = StyleSheet.create({
         zIndex: 999,
         paddingHorizontal: 8,
         fontSize: 14,
-      },
-      placeholderStyle: {
+    },
+    placeholderStyle: {
         fontSize: 16,
-      },
-      selectedTextStyle: {
+    },
+    selectedTextStyle: {
         fontSize: 16,
-      },
-      iconStyle: {
+    },
+    iconStyle: {
         width: 20,
         height: 20,
-      },
-      inputSearchStyle: {
+    },
+    inputSearchStyle: {
         height: 40,
         fontSize: 16,
-      },
+    },
 })
