@@ -2,9 +2,22 @@ import React, {useState} from 'react'
 import { StyleSheet, Text} from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown';
 import { useGetPetsTypesQuery } from '../services/petsServices';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAddPet } from '../features/pets/petsSlice';
 
-const DropdownPetsType = ({isFocus, setIsFocus, handleFilterSubmit, breedSelected, sizeSelected, petSelected}) => {
+const DropdownPetsType = ({filter = false, isFocus, setIsFocus, handleFilterSubmit = () => {}}) => {
+    
+    const dispatch = useDispatch();
+    const petSelected = useSelector(state => state.pets.value.petSelected);
+    const breedSelected = useSelector(state => state.pets.value.breedSelected);
+    const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
+    const addPet = useSelector(state => state.pets.value.addPet);
+
     const {data: petsType, error, isLoading} = useGetPetsTypesQuery();
+
+    const handleAddPet = (item) => {
+        dispatch(setAddPet({...addPet, petType: item}));
+    }
 
     return (
         <>
@@ -23,12 +36,12 @@ const DropdownPetsType = ({isFocus, setIsFocus, handleFilterSubmit, breedSelecte
                         valueField="value"
                         placeholder={!isFocus ? 'Selecciona' : '...'}
                         searchPlaceholder="Buscar..."
-                        value={petSelected}
+                        value={filter ? petSelected : addPet.petType}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            handleFilterSubmit(breedSelected, sizeSelected, item.value)
+                            (filter) ? handleFilterSubmit(breedSelected, sizeSelected, item.value) : handleAddPet(item.value)
                         }}
                     />
                 ) : <Text>Loading...</Text>

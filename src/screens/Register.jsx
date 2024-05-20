@@ -1,29 +1,31 @@
-import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native'
 import { colors } from '../constants/colors'
-import { loginSchema } from '../validations/loginSchema'
-import { useLoginMutation } from '../services/authServices'
+import React, {useState, useEffect} from 'react'
+import { useRegisterMutation } from '../services/authServices'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/auth/authSlice'
+import { registerSchema } from '../validations/registerSchema'
 
-const Login = ({ navigation }) => {
+const Register = ({navigation}) => {
 
-  const dispatch = useDispatch();
-  
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
-  const [error, setError] = useState('');
+  const [inputRepeatPassword, setInputRepeatPassword] = useState('');
 
-  const [triggerPost, result] = useLoginMutation();
+  const [triggerPost, result] = useRegisterMutation();
+  const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
 
     if (result.isSuccess) {
+
       dispatch(setUser({
         email: result.data.email,
         idToken: result.data.idToken,
       }))
-      
+
       navigation.navigate('Login');
 
     } else {
@@ -39,21 +41,25 @@ const Login = ({ navigation }) => {
     setInputPassword(text);
   }
 
+  const handleChangeInputRepeatPassword = (text) => {
+    setInputRepeatPassword(text);
+  }
+
   const handleSubmit = () => {
+
     try {
       const data = {
         email: inputEmail,
         password: inputPassword,
+        confirmPassword: inputRepeatPassword,
       }
   
-      loginSchema.validate(data).then(() => {
+      registerSchema.validate(data).then(() => {
         setError("");
         triggerPost(data);
       }).catch((error) => {
-        console.log(error);
         setError(error.message);
       });
-      
     } catch (error) {
       console.log(error);
     }
@@ -68,8 +74,8 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.loginContainerText}>
           <Text style={styles.loginTitle}>Bienvenid@</Text>
-          <Pressable style={styles.loginLink} onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.loginText}>¿No tienes cuenta?. Registrate gratis <Text style={styles.loginTextLink}>aquí</Text></Text>
+          <Pressable style={styles.loginLink} onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.loginText}>¿Ya tienes cuenta?. Inicia sesión <Text style={styles.loginTextLink}>aquí</Text></Text>
           </Pressable>
           <View style={styles.formContainer}>
             {error && <Text style={styles.inputError}>{error}</Text>}
@@ -93,21 +99,27 @@ const Login = ({ navigation }) => {
               />
             </View>
             <View style={styles.formContainerGroup}>
+              <TextInput 
+                style={styles.input}
+                onChangeText={handleChangeInputRepeatPassword}
+                value={inputRepeatPassword}
+                placeholder='Repetir Contraseña'
+                secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.formContainerGroup}>
               <Pressable style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Iniciar sesión</Text>
+                <Text style={styles.buttonText}>Registrar</Text>
               </Pressable>
             </View>
           </View>
-          <Pressable style={styles.loginLink} onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text style={styles.loginTextLink}>¿Haz olvidado tu contraseña?</Text>
-          </Pressable>
         </View>
       </View>
     </View>
   )
 }
 
-export default Login
+export default Register
 
 const styles = StyleSheet.create({
   loginContainer: {

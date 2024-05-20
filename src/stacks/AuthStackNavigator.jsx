@@ -1,40 +1,40 @@
-import React from 'react'
 import { StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PetLost from '../screens/PetLost';
 import PetDetail from '../screens/PetDetail';
-import PetAddLost from '../screens/PetAddLost';
+import Login from '../screens/Login';
+import Register from '../screens/Register';
+import React from 'react'
+import ForgotPassword from '../screens/ForgotPassword';
 
-const PetStackNavigator = () => {
+const AuthStackNavigator = () => {
 
     const Stack = createNativeStackNavigator();
 
     return (
         <Stack.Navigator
-            initialRouteName='PetLost'
+            initialRouteName='Login'
             screenOptions={{
                 headerShown: false,
             }}
         >
             <Stack.Screen 
-                name="PetLost" 
-                component={PetLost} 
+                name="Login" 
+                component={Login} 
                 
             />
             <Stack.Screen 
-                name="PetDetail" 
-                component={PetDetail} 
+                name="Register" 
+                component={Register} 
             />
-
             <Stack.Screen 
-                name="PetAddLost" 
-                component={PetAddLost} 
+                name="ForgotPassword" 
+                component={ForgotPassword} 
             />
 
         </Stack.Navigator>
     )
 }
 
-export default PetStackNavigator
+export default AuthStackNavigator
 
 const styles = StyleSheet.create({})

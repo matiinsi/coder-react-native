@@ -10,11 +10,12 @@ const Filter = () => {
 
     const dispatch = useDispatch();
     const filterLost = useSelector(state => state.pets.value.filterLost)
+    const breedSelected = useSelector(state => state.pets.value.breedSelected);
+    const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
+    const petSelected = useSelector(state => state.pets.value.petSelected);
+    const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
 
     const [showModalFilter, setShowModalFilter] = useState(false);
-    const [breedSelected, setBreedSelected] = useState("");
-    const [sizeSelected, setSizeSelected] = useState("");
-    const [petSelected, setPetSelected] = useState("");
 
     const handleShowFilter = () => {
         setShowModalFilter(!showModalFilter);
@@ -25,10 +26,11 @@ const Filter = () => {
             {...filterLost, 
                 breed: breedSelected, 
                 size: sizeSelected,
-                petType: petSelected
+                petType: petSelected,
+                necklace: necklaceSelected
             }
         ));
-    }, [breedSelected, sizeSelected]);
+    }, [breedSelected, sizeSelected, petSelected]);
 
     return (
         <View style={styles.filterContainer}>
@@ -40,12 +42,6 @@ const Filter = () => {
                 showModalFilter && (
                     <FilterModal 
                         setShowModalFilter={setShowModalFilter} 
-                        setBreedSelected={setBreedSelected}
-                        breedSelected={breedSelected}
-                        setSizeSelected={setSizeSelected}
-                        sizeSelected={sizeSelected}
-                        petSelected={petSelected}
-                        setPetSelected={setPetSelected}
                     />
                 )
             }

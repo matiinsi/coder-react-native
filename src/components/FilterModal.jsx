@@ -1,40 +1,36 @@
 import React, {useState} from 'react'
 import { StyleSheet, Modal, View, TouchableOpacity, Text } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
-import { Dropdown } from 'react-native-element-dropdown';
 import { colors } from '../constants/colors';
-import { sizes } from '../data/sizes';
-import { useDispatch } from 'react-redux';
-import { setCleanFilterLost } from '../features/pets/petsSlice';
-import { useGetBreedsByPetTypeQuery } from '../services/petsServices';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCleanFilterLost, setBreedSelected, setSizeSelected, setPetSelected, setNecklaceSelected } from '../features/pets/petsSlice';
 import DropdownPetsType from './DropdownPetsType';
 import DropdownBreeds from './DropdownBreeds';
+import DropdownSizes from './DropdownSizes';
+import DropdownNecklace from './DropdownNecklace';
 
-const FilterModal = ({
-        setShowModalFilter, 
-        setBreedSelected, 
-        breedSelected, 
-        setSizeSelected, 
-        sizeSelected,
-        petSelected,
-        setPetSelected
-    }) => {
+const FilterModal = ({setShowModalFilter}) => {
+
+    const petSelected = useSelector(state => state.pets.value.petSelected);
 
     const [isFocus, setIsFocus] = useState(false);
 
     const dispatch = useDispatch();
 
-    const handleFilterSubmit = (breed = '', size = '', petType = '') => {
-        setBreedSelected(breed);
-        setSizeSelected(size);
+    const handleFilterSubmit = (breed = '', size = '', petType = '', necklace = '') => {
+        dispatch(setPetSelected(petType));
+        dispatch(setBreedSelected(breed));
+        dispatch(setSizeSelected(size));
+        dispatch(setNecklaceSelected(necklace));
         setShowModalFilter(false);
-        setPetSelected(petType);
     }
 
     const handleCleanFilter = () => {
         dispatch(setCleanFilterLost());
-        setBreedSelected('');
-        setSizeSelected('');
+        dispatch(setBreedSelected(''));
+        dispatch(setSizeSelected(''));
+        dispatch(setPetSelected(''));
+        dispatch(setNecklaceSelected(''));
         setShowModalFilter(false);
     }
 
@@ -53,48 +49,44 @@ const FilterModal = ({
                     <View style={styles.formGroup}>
                         <Text style={styles.titleFormGroup}>Mascota</Text>
                         <DropdownPetsType
+                            filter={true}
                             isFocus={isFocus}
                             setIsFocus={setIsFocus} 
-                            handleFilterSubmit={handleFilterSubmit} 
-                            breedSelected={breedSelected} 
-                            sizeSelected={sizeSelected} 
-                            petSelected={petSelected}
+                            handleFilterSubmit={handleFilterSubmit}
                         />
                     </View>
-                    <View style={styles.formGroup}>
-                        <Text style={styles.titleFormGroup}>Raza</Text>
-                        <DropdownBreeds 
-                            isFocus={isFocus}
-                            setIsFocus={setIsFocus} 
-                            handleFilterSubmit={handleFilterSubmit} 
-                            breedSelected={breedSelected} 
-                            sizeSelected={sizeSelected} 
-                            petSelected={petSelected}
-                        />
+                    {(
+                       petSelected && (
+                        <View style={styles.formGroup}>
+                            <Text style={styles.titleFormGroup}>Raza</Text>
+                            <DropdownBreeds 
+                                filter={true}
+                                isFocus={isFocus}
+                                setIsFocus={setIsFocus} 
+                                handleFilterSubmit={handleFilterSubmit} 
+                            />
 
-                    </View>
+                        </View>
+                       ) 
+                    )}
+
                     <View style={styles.formGroup}>
                         <Text style={styles.titleFormGroup}>Tamaño</Text>
-                        <Dropdown
-                            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            iconStyle={styles.iconStyle}
-                            data={sizes}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder={!isFocus ? 'Selecciona' : '...'}
-                            searchPlaceholder="Buscar..."
-                            value={sizeSelected}
-                            onFocus={() => setIsFocus(true)}
-                            onBlur={() => setIsFocus(false)}
-                            onChange={item => {
-                                handleFilterSubmit(breedSelected, item.value, petSelected)
-                                setIsFocus(false);
-                            }}
+                        <DropdownSizes
+                            filter={true}
+                            isFocus={isFocus}
+                            setIsFocus={setIsFocus} 
+                            handleFilterSubmit={handleFilterSubmit}
+                        />
+                    </View>
+
+                    <View style={styles.formGroup}>
+                        <Text style={styles.titleFormGroup}>¿Tiene Collar?</Text>
+                        <DropdownNecklace
+                            filter={true}
+                            isFocus={isFocus}
+                            setIsFocus={setIsFocus} 
+                            handleFilterSubmit={handleFilterSubmit}
                         />
                     </View>
                 </View>

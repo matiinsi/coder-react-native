@@ -1,22 +1,22 @@
 import React from 'react'
 import { StyleSheet, Text} from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown';
-import { useGetBreedsByPetTypeQuery } from '../services/petsServices';
-import { useSelector, useDispatch } from 'react-redux';
+import { useGetSizesQuery } from '../services/petsServices';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAddPet } from '../features/pets/petsSlice';
 
-const DropdownBreeds = ({filter = false, isFocus, setIsFocus, handleFilterSubmit = () => {}}) => {
+const DropdownSizes = ({filter = false, isFocus, setIsFocus, handleFilterSubmit}) => {
 
     const dispatch = useDispatch();
-    const petSelected = useSelector(state => state.pets.value.petSelected)
+    const petSelected = useSelector(state => state.pets.value.petSelected);
     const breedSelected = useSelector(state => state.pets.value.breedSelected);
     const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
     const addPet = useSelector(state => state.pets.value.addPet);
 
-    const {data: breeds, error, isLoading} = useGetBreedsByPetTypeQuery((filter) ? petSelected : addPet.petType );
+    const {data: sizes, error, isLoading} = useGetSizesQuery();
 
     const handleAddPet = (item) => {
-        dispatch(setAddPet({...addPet, breed: item}));
+        dispatch(setAddPet({...addPet, size: item}));
     }
 
     return (
@@ -29,21 +29,21 @@ const DropdownBreeds = ({filter = false, isFocus, setIsFocus, handleFilterSubmit
                         selectedTextStyle={styles.selectedTextStyle}
                         inputSearchStyle={styles.inputSearchStyle}
                         iconStyle={styles.iconStyle}
-                        data={breeds}
+                        data={sizes}
                         search
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Selecciona' : '...'}
                         searchPlaceholder="Buscar..."
-                        value={(filter) ? breedSelected : addPet.breed}
+                        value={filter ? sizeSelected : addPet.size}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            (filter) ? handleFilterSubmit(item.value, sizeSelected, petSelected) : handleAddPet(item.value)
+                            (filter) ? handleFilterSubmit(breedSelected, item.value, petSelected) : handleAddPet(item.value)
                         }}
-                    /> 
+                    />
                 ) : <Text>Loading...</Text>
             }
         </>
@@ -51,7 +51,7 @@ const DropdownBreeds = ({filter = false, isFocus, setIsFocus, handleFilterSubmit
     )
 }
 
-export default DropdownBreeds
+export default DropdownSizes
 
 const styles = StyleSheet.create({
     dropdown: {
