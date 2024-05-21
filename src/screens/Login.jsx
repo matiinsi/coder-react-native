@@ -22,7 +22,11 @@ const Login = ({ navigation }) => {
       dispatch(setUser({
         email: result.data.email,
         idToken: result.data.idToken,
+        localId: result.data.localId,
       }))
+
+      console.log(result.data)
+      
       
       navigation.navigate('Login');
 

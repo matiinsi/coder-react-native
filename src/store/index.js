@@ -4,6 +4,7 @@ import petsReducer from "../features/pets/petsSlice";
 import authReducer from "../features/auth/authSlice";
 import { petsApi } from "../services/petsServices";
 import { authApi } from "../services/authServices";
+import { userApi } from "../services/userServices";
 
 const store =  configureStore({
     reducer: {
@@ -11,11 +12,13 @@ const store =  configureStore({
         auth: authReducer,
         [petsApi.reducerPath]: petsApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .concat(petsApi.middleware)
             .concat(authApi.middleware)
+            .concat(userApi.middleware)
 })
 
 setupListeners(store.dispatch);

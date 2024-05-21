@@ -3,7 +3,7 @@ export const filterLost = {
     breed: '',
     size: '',
     necklace: '',
-    date_lost: '',
+    dateLost: '',
     country: '',
     stateSelected: '',
     citySelected: ''

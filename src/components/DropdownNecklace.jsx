@@ -11,6 +11,7 @@ const DropdownNecklace = ({filter = false, isFocus, setIsFocus, handleFilterSubm
     const breedSelected = useSelector(state => state.pets.value.breedSelected);
     const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
     const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
+    const dateLostSelected = useSelector(state => state.pets.value.dateLostSelected);
     const addPet = useSelector(state => state.pets.value.addPet);
 
     const data = [
@@ -39,7 +40,7 @@ const DropdownNecklace = ({filter = false, isFocus, setIsFocus, handleFilterSubm
             onBlur={() => setIsFocus(false)}
             onChange={item => {
                 setIsFocus(false);
-                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, item.value) : handleAddPet(item.value)
+                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, item.value, dateLostSelected) : handleAddPet(item.value)
             }}
         /> 
 

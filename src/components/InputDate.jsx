@@ -1,10 +1,17 @@
 import React, {useState} from 'react'
 import { StyleSheet, View } from 'react-native'
 import DateTimePicker from 'react-native-ui-datepicker';
+import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 
-const InputDate = () => {
+const InputDate = ({filter = false, handleFilterSubmit = () => {}}) => {
   const [date, setDate] = useState(dayjs());
+
+  const dispatch = useDispatch();
+  const petSelected = useSelector(state => state.pets.value.petSelected);
+  const breedSelected = useSelector(state => state.pets.value.breedSelected);
+  const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
+  const addPet = useSelector(state => state.pets.value.addPet);
 
   return (
     <View style={styles.pickerContainer}>

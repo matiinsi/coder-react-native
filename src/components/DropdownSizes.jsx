@@ -11,6 +11,8 @@ const DropdownSizes = ({filter = false, isFocus, setIsFocus, handleFilterSubmit}
     const petSelected = useSelector(state => state.pets.value.petSelected);
     const breedSelected = useSelector(state => state.pets.value.breedSelected);
     const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
+    const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
+    const dateLostSelected = useSelector(state => state.pets.value.dateLostSelected);
     const addPet = useSelector(state => state.pets.value.addPet);
 
     const {data: sizes, error, isLoading} = useGetSizesQuery();
@@ -41,7 +43,7 @@ const DropdownSizes = ({filter = false, isFocus, setIsFocus, handleFilterSubmit}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            (filter) ? handleFilterSubmit(breedSelected, item.value, petSelected) : handleAddPet(item.value)
+                            (filter) ? handleFilterSubmit(breedSelected, item.value, petSelected, necklaceSelected, dateLostSelected) : handleAddPet(item.value)
                         }}
                     />
                 ) : <Text>Loading...</Text>

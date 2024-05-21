@@ -13,8 +13,17 @@ const PetLost = ({navigation}) => {
     const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
     const petSelected = useSelector(state => state.pets.value.petSelected);
     const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
+    const dateLostSelected = useSelector(state => state.pets.value.dateLostSelected);
 
-    const {data: pets, error, isLoading} = useGetPetsQuery({breedSelected, sizeSelected, petSelected, necklaceSelected});
+    const {data: pets, error, isLoading} = useGetPetsQuery(
+        {
+            breedSelected, 
+            sizeSelected, 
+            petSelected, 
+            necklaceSelected, 
+            dateLostSelected
+        }
+    );
 
     return (
         <View style={styles.homeContainer}>

@@ -8,7 +8,7 @@ export const petsApi = createApi({
     endpoints: (builder) => ({
         getPets: builder.query({
             query: (args) => {
-                const { breedSelected, sizeSelected, petSelected, necklaceSelected } = args;
+                const { breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected } = args;
                 let queryParams = [];
         
                 if (breedSelected) {
@@ -22,6 +22,9 @@ export const petsApi = createApi({
                 }
                 if (necklaceSelected) {
                     queryParams.push(`orderBy="necklace"&equalTo=${necklaceSelected}`);
+                }
+                if (dateLostSelected) {
+                    queryParams.push(`orderBy="date_lost"&equalTo="${dateLostSelected}"`);
                 }
         
                 const queryString = queryParams.join('&');
@@ -46,11 +49,9 @@ export const petsApi = createApi({
             }
         }),
         getPetById: builder.query({
-            query: (id) => `pets.json?orderBy="id"&equalTo="${id}"`,
+            query: (id) => `pets/${id}.json`,
             transformResponse: (response) => {
-                const responseTransformed = Object.values(response)
-                if (responseTransformed.length) return responseTransformed[0]
-                return null
+                return response;
             }
         }),
         getSizes: builder.query({
@@ -59,12 +60,23 @@ export const petsApi = createApi({
         getPetsTypes: builder.query({
             query: () => `pet_types.json`,
         }),
+        getImageProfileAccount: builder.query({
+            query: (localId) => `imageProfileAccount/${localId}.json`
+        }),
         postPet: builder.mutation({
             query: (pet) => ({
-                url: `pets.json`,
-                method: 'POST',
+                url: `pets/${pet.id}.json`,
+                method: 'PUT',
                 body: pet
-            })
+            }),
+            invalidatesTags: ['pets'],
+        }),
+        postImageProfileAccount: builder.mutation({
+            query: ({image, localId}) => ({
+                url: `image_profile_account/${localId}.json`,
+                method: 'PUT',
+                body: image
+            }),
         }),
     })
 }); // Creo la API
@@ -75,5 +87,6 @@ export const {
     useGetSizesQuery, 
     useGetPetsTypesQuery, 
     useGetPetByIdQuery, 
-    usePostPetMutation 
+    usePostPetMutation,
+    usePostImageProfileAccountMutation
 } = petsApi; // Exporto los hooks

@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
-import { StyleSheet, Modal, View, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, Modal, View, TouchableOpacity, Text, ScrollView } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCleanFilterLost, setBreedSelected, setSizeSelected, setPetSelected, setNecklaceSelected } from '../features/pets/petsSlice';
+import { setCleanFilterLost, setBreedSelected, setSizeSelected, setPetSelected, setNecklaceSelected, setDateLostSelected } from '../features/pets/petsSlice';
 import DropdownPetsType from './DropdownPetsType';
 import DropdownBreeds from './DropdownBreeds';
 import DropdownSizes from './DropdownSizes';
 import DropdownNecklace from './DropdownNecklace';
+import InputDate from './InputDate';
 
 const FilterModal = ({setShowModalFilter}) => {
 
@@ -17,11 +18,12 @@ const FilterModal = ({setShowModalFilter}) => {
 
     const dispatch = useDispatch();
 
-    const handleFilterSubmit = (breed = '', size = '', petType = '', necklace = '') => {
+    const handleFilterSubmit = (breed = '', size = '', petType = '', necklace = '', dateLost = '') => {
         dispatch(setPetSelected(petType));
         dispatch(setBreedSelected(breed));
         dispatch(setSizeSelected(size));
         dispatch(setNecklaceSelected(necklace));
+        dispatch(setDateLostSelected(dateLost));
         setShowModalFilter(false);
     }
 
@@ -31,6 +33,7 @@ const FilterModal = ({setShowModalFilter}) => {
         dispatch(setSizeSelected(''));
         dispatch(setPetSelected(''));
         dispatch(setNecklaceSelected(''));
+        dispatch(setDateLostSelected(''));
         setShowModalFilter(false);
     }
 
@@ -45,7 +48,15 @@ const FilterModal = ({setShowModalFilter}) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.formContainer}>
-                <View>
+                <View style={styles.formGroupButtonContainer}>
+                    <TouchableOpacity 
+                        style={styles.buttonFormGroup}
+                        onPress={handleCleanFilter}
+                    >
+                        <Text style={styles.textButtonFormGroup}>Limpiar Filtros</Text>
+                    </TouchableOpacity>
+                </View>
+                <ScrollView>
                     <View style={styles.formGroup}>
                         <Text style={styles.titleFormGroup}>Mascota</Text>
                         <DropdownPetsType
@@ -89,15 +100,16 @@ const FilterModal = ({setShowModalFilter}) => {
                             handleFilterSubmit={handleFilterSubmit}
                         />
                     </View>
-                </View>
-                <View style={styles.formGroupButtonContainer}>
-                    <TouchableOpacity 
-                        style={styles.buttonFormGroup}
-                        onPress={handleCleanFilter}
-                    >
-                        <Text style={styles.textButtonFormGroup}>Limpiar Filtros</Text>
-                    </TouchableOpacity>
-                </View>
+
+                    <View style={styles.formGroup}>
+                        <Text style={styles.titleFormGroup}>Fecha de extravio</Text>
+                        <InputDate 
+                            filter={true}
+                            handleFilterSubmit={handleFilterSubmit}
+                        />
+                    </View>
+                </ScrollView>
+
             </View>
         </Modal>
     )
@@ -123,7 +135,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     formContainer: {
-        padding: 10,
+        padding: 20,
         display: "flex",
         justifyContent: "space-between",
         height: "100%",
@@ -150,8 +162,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.red,
         padding: 10,
         borderRadius: 10,
-        position: "relative",
-        bottom: 100
+
     },
     textButtonFormGroup: {
         color: colors.white,
@@ -159,41 +170,5 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         position: "relative"
     },
-    container: {
-        backgroundColor: 'white',
-        padding: 16,
-      },
-    dropdown: {
-        height: 50,
-        borderColor: 'gray',
-        borderWidth: 0.5,
-        borderRadius: 8,
-        paddingHorizontal: 8,
-    },
-    icon: {
-        marginRight: 5,
-    },
-    label: {
-        position: 'absolute',
-        backgroundColor: 'white',
-        left: 22,
-        top: 8,
-        zIndex: 999,
-        paddingHorizontal: 8,
-        fontSize: 14,
-    },
-    placeholderStyle: {
-        fontSize: 16,
-    },
-    selectedTextStyle: {
-        fontSize: 16,
-    },
-    iconStyle: {
-        width: 20,
-        height: 20,
-    },
-    inputSearchStyle: {
-        height: 40,
-        fontSize: 16,
-    },
+
 })

@@ -26,6 +26,7 @@ const PetAddLost = ({navigation}) => {
             size: "medium",
             pet_event: true,
             id: uuid.v4(),
+            necklace: 2,
         });
     };
 
@@ -37,6 +38,7 @@ const PetAddLost = ({navigation}) => {
                         <AntDesign name="arrowleft" size={24} color="black" />
                     </Pressable>
                 </View>
+                <Pressable onPress={handleSubmit}><Text>Enviar</Text></Pressable>
                 <View style={styles.formContainer}>
                     {error && <Text style={styles.inputError}>{error}</Text>}
                     <View style={styles.formGroup}>

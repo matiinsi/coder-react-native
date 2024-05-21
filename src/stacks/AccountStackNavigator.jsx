@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Account from '../screens/Account'
+import MyProfile from '../screens/MyProfile'
+import LaunchCamera from '../screens/LaunchCamera'
 import React from 'react'
 
 const AccountStackNavigator = () => {
@@ -8,16 +9,19 @@ const AccountStackNavigator = () => {
     
     return (
         <Stack.Navigator
-            initialRouteName='Account'
+            initialRouteName='MyProfile'
             screenOptions={{
                 headerShown: false,
             }}
         >
             <Stack.Screen
-                name="Account"
-                component={Account}
+                name="MyProfile"
+                component={MyProfile}
             />
-            
+            <Stack.Screen
+                name="LaunchCamera"
+                component={LaunchCamera}
+            />
         </Stack.Navigator>
     )
 }

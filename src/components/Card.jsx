@@ -6,7 +6,7 @@ import { colors } from '../constants/colors'
 
 const Card = ({item, navigation}) => {
 
-    const {breed, size, color, date_lost, id} = item;
+    const {breed, size, color, dateLost, id} = item;
     
     return (
         <>
@@ -16,7 +16,7 @@ const Card = ({item, navigation}) => {
                     <Text><Text style={styles.cardTitleItem}>Raza:</Text> { breed }</Text>
                     <Text><Text style={styles.cardTitleItem}>Tamaño:</Text> { converSize(size) }</Text>
                     <Text><Text style={styles.cardTitleItem}>Color:</Text> { color }</Text>
-                    <Text><Text style={styles.cardTitleItem}>Perdido:</Text> {convertDate(date_lost)}</Text>
+                    <Text><Text style={styles.cardTitleItem}>Perdido:</Text> {convertDate(dateLost)}</Text>
                     <View>
                         <TouchableOpacity 
                             style={styles.cardButton}
