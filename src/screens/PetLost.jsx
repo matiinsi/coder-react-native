@@ -9,11 +9,7 @@ import ButtonAddPet from '../components/ButtonAddPet'
 
 const PetLost = ({navigation}) => {
 
-    const breedSelected = useSelector(state => state.pets.value.breedSelected);
-    const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
-    const petSelected = useSelector(state => state.pets.value.petSelected);
-    const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
-    const dateLostSelected = useSelector(state => state.pets.value.dateLostSelected);
+    const {breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected} = useSelector(state => state.pets.value);
 
     const {data: pets, error, isLoading} = useGetPetsQuery(
         {
@@ -21,12 +17,14 @@ const PetLost = ({navigation}) => {
             sizeSelected, 
             petSelected, 
             necklaceSelected, 
-            dateLostSelected
+            dateLostSelected,
+            countrySelected
         }
     );
 
     return (
         <View style={styles.homeContainer}>
+            <ButtonAddPet navigation={navigation} />
             <Filter />
             {
                 !isLoading ? (
@@ -42,7 +40,6 @@ const PetLost = ({navigation}) => {
                     />
                 ) : <Text>Loading...</Text>
             }
-            <ButtonAddPet navigation={navigation} />
         </View>
     )
 }

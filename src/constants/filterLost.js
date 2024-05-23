@@ -4,7 +4,11 @@ export const filterLost = {
     size: '',
     necklace: '',
     dateLost: '',
-    country: '',
-    stateSelected: '',
-    citySelected: ''
+    location: {
+        country: '',
+        state: '',
+        city: '',
+        address: '',
+        postalCode: ''
+    }
 };

@@ -2,7 +2,7 @@ import { TouchableOpacity, Text } from 'react-native'
 import { colors } from '../constants/colors'
 import React from 'react'
 
-const AddButton = ({title, action, bgColor = colors.blue, textColor = colors.white}) => {
+const AddButton = ({title, action, bgColor = colors.blue, textColor = colors.white, size = "100%"}) => {
   return (
     <TouchableOpacity
         onPress={action}
@@ -10,7 +10,7 @@ const AddButton = ({title, action, bgColor = colors.blue, textColor = colors.whi
             backgroundColor: bgColor,
             padding: 10,
             borderRadius: 5,
-            width: '100%',
+            width: size,
             marginTop: 10,
         }}
     >

@@ -12,6 +12,7 @@ export const petsSlice = createSlice({
             sizeSelected: "",
             necklaceSelected: "",
             dateLostSelected: "",
+            countrySelected: "",
             addPet: addPetValues,
         }
     },
@@ -37,6 +38,9 @@ export const petsSlice = createSlice({
         setDateLostSelected: (state, action) => {
             state.value.dateLostSelected = action.payload;
         },
+        setCountrySelected: (state, action) => {
+            state.value.countrySelected = action.payload;
+        },
         setAddPet: (state, action) => {
             state.value.addPet = action.payload;
         }
@@ -51,6 +55,7 @@ export const {
     setPetSelected,
     setNecklaceSelected,
     setDateLostSelected,
+    setCountrySelected,
     setAddPet 
 } = petsSlice.actions; // Exporto los estados
 

@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PetLost from '../screens/PetLost';
 import PetDetail from '../screens/PetDetail';
-import PetAddLost from '../screens/PetAddLost';
+import PetAddInfo from '../screens/PetAddInfo';
+import PetAddLocation from '../screens/PetAddLocation';
 
 const PetStackNavigator = () => {
 
@@ -27,8 +28,13 @@ const PetStackNavigator = () => {
             />
 
             <Stack.Screen 
-                name="PetAddLost" 
-                component={PetAddLost} 
+                name="PetAddInfo" 
+                component={PetAddInfo} 
+            />
+
+            <Stack.Screen 
+                name="PetAddLocation" 
+                component={PetAddLocation} 
             />
 
         </Stack.Navigator>

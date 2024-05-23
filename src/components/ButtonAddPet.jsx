@@ -7,7 +7,7 @@ const ButtonAddPet = ({ navigation }) => {
     <View style={styles.buttonsContainer}>
       <Pressable 
         style={styles.button}
-        onPress={() => navigation.navigate("PetAddLost")}
+        onPress={() => navigation.navigate("PetAddInfo")}
     >
             <Text style={styles.buttonText}>Perdí mi Macota</Text>
         </Pressable>

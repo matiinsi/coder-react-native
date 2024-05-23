@@ -3,19 +3,28 @@ import { StyleSheet} from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAddPet } from '../features/pets/petsSlice';
+import { countries } from '../data/countries';
 
-const DropdownNecklace = ({filter = false, isFocus, setIsFocus, handleFilterSubmit = () => {}}) => {
-
+const DropdownCountry = ({filter = false, isFocus, setIsFocus, handleFilterSubmit = () => {}}) => {
+    
     const dispatch = useDispatch();
     const {petSelected, breedSelected, sizeSelected, necklaceSelected, dateLostSelected, countrySelected, addPet} = useSelector(state => state.pets.value);
 
-    const data = [
-        { label: 'Si', value: 2 },
-        { label: 'No', value: 1 },
-    ]
-
     const handleAddPet = (item) => {
-        dispatch(setAddPet({...addPet, necklace: item}));
+        dispatch(setAddPet({ 
+            ...addPet,
+                location: {
+                ...addPet.location,
+                    country: item
+                }
+            }
+        ));
+    }
+
+    const setCountries = () => {
+        return countries.map((country) => {
+            return {label: country.name, value: country.value}
+        })
     }
 
     return (
@@ -25,24 +34,26 @@ const DropdownNecklace = ({filter = false, isFocus, setIsFocus, handleFilterSubm
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={data}
+            data={setCountries()}
+            search
             maxHeight={300}
             labelField="label"
             valueField="value"
             placeholder={!isFocus ? 'Selecciona' : '...'}
-            value={(filter) ? necklaceSelected : addPet.necklace}
+            searchPlaceholder="Buscar..."
+            value={filter ? countrySelected : addPet.location?.country}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
                 setIsFocus(false);
-                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, item.value, dateLostSelected, countrySelected) : handleAddPet(item.value)
+                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, item.value) : handleAddPet(item.value)
             }}
-        /> 
+        />
 
     )
 }
 
-export default DropdownNecklace
+export default DropdownCountry
 
 const styles = StyleSheet.create({
     dropdown: {

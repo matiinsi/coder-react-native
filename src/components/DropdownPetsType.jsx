@@ -8,11 +8,7 @@ import { setAddPet } from '../features/pets/petsSlice';
 const DropdownPetsType = ({filter = false, isFocus, setIsFocus, handleFilterSubmit = () => {}}) => {
     
     const dispatch = useDispatch();
-    const petSelected = useSelector(state => state.pets.value.petSelected);
-    const breedSelected = useSelector(state => state.pets.value.breedSelected);
-    const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
-    const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
-    const addPet = useSelector(state => state.pets.value.addPet);
+    const {petSelected, breedSelected, sizeSelected, necklaceSelected, dateLostSelected, countrySelected, addPet} = useSelector(state => state.pets.value);
 
     const {data: petsType, error, isLoading} = useGetPetsTypesQuery();
 
@@ -42,7 +38,7 @@ const DropdownPetsType = ({filter = false, isFocus, setIsFocus, handleFilterSubm
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            (filter) ? handleFilterSubmit(breedSelected, sizeSelected, item.value, necklaceSelected) : handleAddPet(item.value)
+                            (filter) ? handleFilterSubmit(breedSelected, sizeSelected, item.value, necklaceSelected, dateLostSelected, countrySelected) : handleAddPet(item.value)
                         }}
                     />
                 ) : <Text>Loading...</Text>

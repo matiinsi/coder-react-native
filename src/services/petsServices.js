@@ -8,7 +8,7 @@ export const petsApi = createApi({
     endpoints: (builder) => ({
         getPets: builder.query({
             query: (args) => {
-                const { breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected } = args;
+                const { breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected } = args;
                 let queryParams = [];
         
                 if (breedSelected) {
@@ -25,6 +25,10 @@ export const petsApi = createApi({
                 }
                 if (dateLostSelected) {
                     queryParams.push(`orderBy="date_lost"&equalTo="${dateLostSelected}"`);
+                }
+
+                if (countrySelected) {
+                    queryParams.push(`orderBy="location/country"&equalTo="${countrySelected}"`);
                 }
         
                 const queryString = queryParams.join('&');

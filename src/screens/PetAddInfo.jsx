@@ -8,26 +8,42 @@ import DropdownPetsType from '../components/DropdownPetsType';
 import DropdownBreeds from '../components/DropdownBreeds';
 import DropdownSizes from '../components/DropdownSizes';
 import DropdownNecklace from '../components/DropdownNecklace';
+import AddButton from '../components/AddButton';
 import uuid from 'react-native-uuid';
 import InputDate from '../components/InputDate';
+import { addPetInfoSchema } from '../validations/addPetInfoSchema';
 
-const PetAddLost = ({navigation}) => {
+const PetAddInfo = ({navigation}) => {
 
-    const addPet = useSelector(state => state.pets.value.addPet);
+    const {addPet} = useSelector(state => state.pets.value);
 
     const [triggerPost, result] = usePostPetMutation();
     const [error, setError] = useState("");
     const [isFocus, setIsFocus] = useState(false);
     
     const handleSubmit = () => {
-        triggerPost({
+
+        try {
+            addPetInfoSchema.validate(addPet)
+                .then(() => {
+                    setError("");
+                    navigation.navigate("PetAddLocation");
+                })
+                .catch((error) => {
+                    setError(error.message);
+            });
+        } catch (error) {
+            setError(error.message);
+        }
+
+/*         triggerPost({
             breed: "Bulldog",
             pet_type: "dog",
             size: "medium",
             pet_event: true,
             id: uuid.v4(),
             necklace: 2,
-        });
+        }); */
     };
 
     return (
@@ -38,14 +54,15 @@ const PetAddLost = ({navigation}) => {
                         <AntDesign name="arrowleft" size={24} color="black" />
                     </Pressable>
                 </View>
-                <Pressable onPress={handleSubmit}><Text>Enviar</Text></Pressable>
+                <View>
+                    <Text style={styles.title}>Información de la Mascota</Text>
+                </View>
                 <View style={styles.formContainer}>
-                    {error && <Text style={styles.inputError}>{error}</Text>}
                     <View style={styles.formGroup}>
                         <Text style={styles.titleFormGroup}>Mascota</Text>
                         <DropdownPetsType
                             isFocus={isFocus}
-                            setIsFocus={setIsFocus} 
+                            setIsFocus={setIsFocus}
                         />
                     </View>
                     {
@@ -79,6 +96,10 @@ const PetAddLost = ({navigation}) => {
                         <Text style={styles.titleFormGroup}>Fecha de extravio</Text>
                         <InputDate />
                     </View>
+                    {error && <Text style={styles.inputError}>{error}</Text>}
+                    <View style={styles.formGroupInputs}>
+                        <AddButton title={"Siguiente"} action={handleSubmit} bgColor={colors.green} />
+                    </View>
 
                 </View>
             </ScrollView>
@@ -86,7 +107,7 @@ const PetAddLost = ({navigation}) => {
     )
 }
 
-export default PetAddLost
+export default PetAddInfo
 
 const styles = StyleSheet.create({
     petContainer: {
@@ -104,6 +125,13 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 20
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: colors.blue,
+        marginBottom: 0
     },
     titleFormGroup: {
         fontSize: 20,
@@ -124,5 +152,23 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.grayLight,
         zIndex: 1,
         position: "relative"
+    },
+    formGroupInputs: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingBottom: 20,
+        borderBottomWidth: 2,
+        borderBottomColor: colors.grayLight,
+        zIndex: 1,
+        position: "relative"
+    },
+    inputError: {
+        backgroundColor: colors.red,
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 20,
+        textAlign: 'center',
+        color: colors.white,
     },
 })

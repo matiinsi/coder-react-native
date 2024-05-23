@@ -8,11 +8,7 @@ import { setAddPet } from '../features/pets/petsSlice';
 const DropdownBreeds = ({filter = false, isFocus, setIsFocus, handleFilterSubmit = () => {}}) => {
 
     const dispatch = useDispatch();
-    const petSelected = useSelector(state => state.pets.value.petSelected)
-    const breedSelected = useSelector(state => state.pets.value.breedSelected);
-    const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
-    const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
-    const dateLostSelected = useSelector(state => state.pets.value.dateLostSelected);
+    const {petSelected, breedSelected, sizeSelected, necklaceSelected, dateLostSelected} = useSelector(state => state.pets.value);
 
     const addPet = useSelector(state => state.pets.value.addPet);
 

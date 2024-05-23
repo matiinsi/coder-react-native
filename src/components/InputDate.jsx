@@ -1,24 +1,26 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, View } from 'react-native'
 import DateTimePicker from 'react-native-ui-datepicker';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
+import { setAddPet } from '../features/pets/petsSlice';
 
 const InputDate = ({filter = false, handleFilterSubmit = () => {}}) => {
-  const [date, setDate] = useState(dayjs());
 
   const dispatch = useDispatch();
-  const petSelected = useSelector(state => state.pets.value.petSelected);
-  const breedSelected = useSelector(state => state.pets.value.breedSelected);
-  const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
-  const addPet = useSelector(state => state.pets.value.addPet);
+  const {petSelected, breedSelected, sizeSelected, necklaceSelected, addPet} = useSelector(state => state.pets.value);
+
+  console.log(addPet);
 
   return (
     <View style={styles.pickerContainer}>
       <DateTimePicker
         mode="single"
-        date={date}
-        onChange={(params) => setDate(params.date)}
+        date={dayjs(addPet.dateLost)}
+        onChange={(params) => {
+          filter ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, necklaceSelected, params.date.format('YYYY-MM-DD')) :
+          dispatch(setAddPet({...addPet, dateLost: params.date.format('YYYY-MM-DD')}));
+        }}
         maxDate={dayjs()}
       />
     </View>

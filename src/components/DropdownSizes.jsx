@@ -8,12 +8,7 @@ import { setAddPet } from '../features/pets/petsSlice';
 const DropdownSizes = ({filter = false, isFocus, setIsFocus, handleFilterSubmit}) => {
 
     const dispatch = useDispatch();
-    const petSelected = useSelector(state => state.pets.value.petSelected);
-    const breedSelected = useSelector(state => state.pets.value.breedSelected);
-    const sizeSelected = useSelector(state => state.pets.value.sizeSelected);
-    const necklaceSelected = useSelector(state => state.pets.value.necklaceSelected);
-    const dateLostSelected = useSelector(state => state.pets.value.dateLostSelected);
-    const addPet = useSelector(state => state.pets.value.addPet);
+    const {petSelected, breedSelected, sizeSelected, necklaceSelected, dateLostSelected, countrySelected, addPet} = useSelector(state => state.pets.value);
 
     const {data: sizes, error, isLoading} = useGetSizesQuery();
 
@@ -43,7 +38,8 @@ const DropdownSizes = ({filter = false, isFocus, setIsFocus, handleFilterSubmit}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            (filter) ? handleFilterSubmit(breedSelected, item.value, petSelected, necklaceSelected, dateLostSelected) : handleAddPet(item.value)
+                            (filter) ? handleFilterSubmit(breedSelected, item.value, petSelected, necklaceSelected, dateLostSelected, countrySelected) : 
+                            handleAddPet(item.value)
                         }}
                     />
                 ) : <Text>Loading...</Text>

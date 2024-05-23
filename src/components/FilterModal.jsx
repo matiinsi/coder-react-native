@@ -3,27 +3,29 @@ import { StyleSheet, Modal, View, TouchableOpacity, Text, ScrollView } from 'rea
 import { FontAwesome } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCleanFilterLost, setBreedSelected, setSizeSelected, setPetSelected, setNecklaceSelected, setDateLostSelected } from '../features/pets/petsSlice';
+import { setCleanFilterLost, setBreedSelected, setSizeSelected, setPetSelected, setNecklaceSelected, setDateLostSelected, setCountrySelected } from '../features/pets/petsSlice';
 import DropdownPetsType from './DropdownPetsType';
 import DropdownBreeds from './DropdownBreeds';
 import DropdownSizes from './DropdownSizes';
 import DropdownNecklace from './DropdownNecklace';
+import DropdownCountry from './DropdownCountry';
 import InputDate from './InputDate';
 
 const FilterModal = ({setShowModalFilter}) => {
 
-    const petSelected = useSelector(state => state.pets.value.petSelected);
+    const {petSelected} = useSelector(state => state.pets.value);
 
     const [isFocus, setIsFocus] = useState(false);
 
     const dispatch = useDispatch();
 
-    const handleFilterSubmit = (breed = '', size = '', petType = '', necklace = '', dateLost = '') => {
+    const handleFilterSubmit = (breed = '', size = '', petType = '', necklace = '', dateLost = '', country = '') => {
         dispatch(setPetSelected(petType));
         dispatch(setBreedSelected(breed));
         dispatch(setSizeSelected(size));
         dispatch(setNecklaceSelected(necklace));
         dispatch(setDateLostSelected(dateLost));
+        dispatch(setCountrySelected(country));
         setShowModalFilter(false);
     }
 
@@ -34,6 +36,7 @@ const FilterModal = ({setShowModalFilter}) => {
         dispatch(setPetSelected(''));
         dispatch(setNecklaceSelected(''));
         dispatch(setDateLostSelected(''));
+        dispatch(setCountrySelected(''));
         setShowModalFilter(false);
     }
 
@@ -94,6 +97,16 @@ const FilterModal = ({setShowModalFilter}) => {
                     <View style={styles.formGroup}>
                         <Text style={styles.titleFormGroup}>¿Tiene Collar?</Text>
                         <DropdownNecklace
+                            filter={true}
+                            isFocus={isFocus}
+                            setIsFocus={setIsFocus} 
+                            handleFilterSubmit={handleFilterSubmit}
+                        />
+                    </View>
+
+                    <View style={styles.formGroup}>
+                        <Text style={styles.titleFormGroup}>País</Text>
+                        <DropdownCountry
                             filter={true}
                             isFocus={isFocus}
                             setIsFocus={setIsFocus} 
