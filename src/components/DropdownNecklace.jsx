@@ -7,7 +7,7 @@ import { setAddPet } from '../features/pets/petsSlice';
 const DropdownNecklace = ({filter = false, isFocus, setIsFocus, handleFilterSubmit = () => {}}) => {
 
     const dispatch = useDispatch();
-    const {petSelected, breedSelected, sizeSelected, necklaceSelected, dateLostSelected, countrySelected, addPet} = useSelector(state => state.pets.value);
+    const {petSelected, breedSelected, sizeSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected, addPet} = useSelector(state => state.pets.value);
 
     const data = [
         { label: 'Si', value: 2 },
@@ -35,7 +35,7 @@ const DropdownNecklace = ({filter = false, isFocus, setIsFocus, handleFilterSubm
             onBlur={() => setIsFocus(false)}
             onChange={item => {
                 setIsFocus(false);
-                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, item.value, dateLostSelected, countrySelected) : handleAddPet(item.value)
+                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, item.value, dateLostSelected, countrySelected, stateSelected) : handleAddPet(item.value)
             }}
         /> 
 

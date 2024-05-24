@@ -9,7 +9,7 @@ import { setFilterLost } from '../features/pets/petsSlice';
 const Filter = () => {
 
     const dispatch = useDispatch();
-    const {filterLost, breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected} = useSelector(state => state.pets.value)
+    const {filterLost, breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected} = useSelector(state => state.pets.value)
 
     const [showModalFilter, setShowModalFilter] = useState(false);
 
@@ -25,10 +25,11 @@ const Filter = () => {
                 petType: petSelected,
                 necklace: necklaceSelected,
                 dateLost: dateLostSelected,
-                country: countrySelected
+                country: countrySelected,
+                state: stateSelected
             }
         ));
-    }, [breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected]);
+    }, [breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected]);
 
     return (
         <View style={styles.filterContainer}>

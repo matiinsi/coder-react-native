@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native'
 import { colors } from '../constants/colors';
-import { usePostPetMutation } from '../services/petsServices'
 import { AntDesign } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import DropdownPetsType from '../components/DropdownPetsType';
@@ -9,7 +8,6 @@ import DropdownBreeds from '../components/DropdownBreeds';
 import DropdownSizes from '../components/DropdownSizes';
 import DropdownNecklace from '../components/DropdownNecklace';
 import AddButton from '../components/AddButton';
-import uuid from 'react-native-uuid';
 import InputDate from '../components/InputDate';
 import { addPetInfoSchema } from '../validations/addPetInfoSchema';
 
@@ -17,12 +15,10 @@ const PetAddInfo = ({navigation}) => {
 
     const {addPet} = useSelector(state => state.pets.value);
 
-    const [triggerPost, result] = usePostPetMutation();
     const [error, setError] = useState("");
     const [isFocus, setIsFocus] = useState(false);
     
     const handleSubmit = () => {
-
         try {
             addPetInfoSchema.validate(addPet)
                 .then(() => {
@@ -35,15 +31,6 @@ const PetAddInfo = ({navigation}) => {
         } catch (error) {
             setError(error.message);
         }
-
-/*         triggerPost({
-            breed: "Bulldog",
-            pet_type: "dog",
-            size: "medium",
-            pet_event: true,
-            id: uuid.v4(),
-            necklace: 2,
-        }); */
     };
 
     return (

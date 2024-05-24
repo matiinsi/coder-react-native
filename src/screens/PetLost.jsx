@@ -9,7 +9,7 @@ import ButtonAddPet from '../components/ButtonAddPet'
 
 const PetLost = ({navigation}) => {
 
-    const {breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected} = useSelector(state => state.pets.value);
+    const {breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected} = useSelector(state => state.pets.value);
 
     const {data: pets, error, isLoading} = useGetPetsQuery(
         {
@@ -18,7 +18,8 @@ const PetLost = ({navigation}) => {
             petSelected, 
             necklaceSelected, 
             dateLostSelected,
-            countrySelected
+            countrySelected,
+            stateSelected
         }
     );
 

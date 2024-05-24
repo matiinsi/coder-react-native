@@ -5,6 +5,8 @@ import PetLost from '../screens/PetLost';
 import PetDetail from '../screens/PetDetail';
 import PetAddInfo from '../screens/PetAddInfo';
 import PetAddLocation from '../screens/PetAddLocation';
+import PetAddPhoto from '../screens/PetAddPhoto';
+import PetAddFinal from '../screens/PetAddFinal';
 
 const PetStackNavigator = () => {
 
@@ -35,6 +37,16 @@ const PetStackNavigator = () => {
             <Stack.Screen 
                 name="PetAddLocation" 
                 component={PetAddLocation} 
+            />
+
+            <Stack.Screen 
+                name="PetAddPhoto" 
+                component={PetAddPhoto} 
+            />
+
+            <Stack.Screen 
+                name="PetAddFinal" 
+                component={PetAddFinal} 
             />
 
         </Stack.Navigator>

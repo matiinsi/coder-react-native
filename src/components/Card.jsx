@@ -6,12 +6,12 @@ import { colors } from '../constants/colors'
 
 const Card = ({item, navigation}) => {
 
-    const {breed, size, color, dateLost, id} = item;
+    const {breed, size, color, dateLost, id, profileImage} = item;
     
     return (
         <>
             <View style={styles.cardContainer}>
-                <Image source={{uri: "https://placehold.co/100x100"}} style={{width: 100, height: 100}} />
+                <Image source={{uri: profileImage}} style={{width: 100, height: 100}} />
                 <View style={styles.cardContainerText}>
                     <Text><Text style={styles.cardTitleItem}>Raza:</Text> { breed }</Text>
                     <Text><Text style={styles.cardTitleItem}>Tamaño:</Text> { converSize(size) }</Text>

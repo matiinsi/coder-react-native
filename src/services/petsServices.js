@@ -8,7 +8,7 @@ export const petsApi = createApi({
     endpoints: (builder) => ({
         getPets: builder.query({
             query: (args) => {
-                const { breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected } = args;
+                const { breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected } = args;
                 let queryParams = [];
         
                 if (breedSelected) {
@@ -26,9 +26,11 @@ export const petsApi = createApi({
                 if (dateLostSelected) {
                     queryParams.push(`orderBy="date_lost"&equalTo="${dateLostSelected}"`);
                 }
-
                 if (countrySelected) {
                     queryParams.push(`orderBy="location/country"&equalTo="${countrySelected}"`);
+                }
+                if (stateSelected) {
+                    queryParams.push(`orderBy="location/state"&equalTo="${stateSelected}"`);
                 }
         
                 const queryString = queryParams.join('&');
@@ -74,14 +76,7 @@ export const petsApi = createApi({
                 body: pet
             }),
             invalidatesTags: ['pets'],
-        }),
-        postImageProfileAccount: builder.mutation({
-            query: ({image, localId}) => ({
-                url: `image_profile_account/${localId}.json`,
-                method: 'PUT',
-                body: image
-            }),
-        }),
+        })
     })
 }); // Creo la API
 
