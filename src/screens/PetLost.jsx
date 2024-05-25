@@ -29,16 +29,22 @@ const PetLost = ({navigation}) => {
             <Filter />
             {
                 !isLoading ? (
-                    <FlatList 
-                        data={pets}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({item}) => {
-                            return (
-                                <Card item={item} navigation={navigation} />
-                            )
-                        }}
-                        style={styles.listContainer}
-                    />
+                    <>
+                        {
+                            (pets && pets.length > 0) ? (
+                            <FlatList 
+                                data={pets}
+                                keyExtractor={(item) => item.id}
+                                renderItem={({item}) => {
+                                    return (
+                                        <Card item={item} navigation={navigation} />
+                                    )
+                                }}
+                                style={styles.listContainer}
+                            />
+                            ) : <Text style={styles.textError}>No se encontraron mascotas</Text>
+                        }
+                    </>
                 ) : <Text>Loading...</Text>
             }
         </View>
@@ -55,6 +61,13 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     listContainer: {
-        width: "100%"
+        width: "100%",
+        height: "90%"
+    },
+    textError: {
+        fontSize: 20,
+        color: colors.red,
+        textAlign: "center",
+        marginTop: 20
     }
 })

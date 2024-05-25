@@ -11,6 +11,7 @@ import DropdownNecklace from './DropdownNecklace';
 import DropdownCountry from './DropdownCountry';
 import DropdownState from './DropdownState';
 import InputDate from './InputDate';
+import InputColor from './InputColor';
 
 const FilterModal = ({setShowModalFilter}) => {
 
@@ -28,7 +29,7 @@ const FilterModal = ({setShowModalFilter}) => {
         dispatch(setDateLostSelected(dateLost));
         dispatch(setCountrySelected(country));
         dispatch(setStateSelected(state));
-        setShowModalFilter(false);
+        //setShowModalFilter(false);
     }
 
     const handleCleanFilter = () => {
@@ -40,6 +41,10 @@ const FilterModal = ({setShowModalFilter}) => {
         dispatch(setDateLostSelected(''));
         dispatch(setCountrySelected(''));
         dispatch(setStateSelected(''));
+        setShowModalFilter(false);
+    }
+
+    const onPressButtonFilter = () => {
         setShowModalFilter(false);
     }
 
@@ -56,10 +61,18 @@ const FilterModal = ({setShowModalFilter}) => {
             <View style={styles.formContainer}>
                 <View style={styles.formGroupButtonContainer}>
                     <TouchableOpacity 
-                        style={styles.buttonFormGroup}
+                        style={styles.buttonCleanFormGroup}
                         onPress={handleCleanFilter}
                     >
                         <Text style={styles.textButtonFormGroup}>Limpiar Filtros</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.formGroupButtonContainer}>
+                    <TouchableOpacity 
+                        style={styles.buttonSuccessFormGroup}
+                        onPress={onPressButtonFilter}
+                    >
+                        <Text style={styles.textButtonFormGroup}>Aplicar Filtros</Text>
                     </TouchableOpacity>
                 </View>
                 <ScrollView>
@@ -94,6 +107,15 @@ const FilterModal = ({setShowModalFilter}) => {
                             isFocus={isFocus}
                             setIsFocus={setIsFocus} 
                             handleFilterSubmit={handleFilterSubmit}
+                        />
+                    </View>
+
+                    <View style={styles.formGroup}>
+                        <Text style={styles.titleFormGroup}>Color</Text>
+                        <InputColor
+                            filter={true}
+                            isFocus={isFocus}
+                            setIsFocus={setIsFocus} 
                         />
                     </View>
 
@@ -184,11 +206,15 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 5
     },
-    buttonFormGroup: {
+    buttonCleanFormGroup: {
         backgroundColor: colors.red,
         padding: 10,
         borderRadius: 10,
-
+    },
+    buttonSuccessFormGroup: {
+        backgroundColor: colors.green,
+        padding: 10,
+        borderRadius: 10,
     },
     textButtonFormGroup: {
         color: colors.white,

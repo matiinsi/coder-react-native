@@ -3,6 +3,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
 import React from 'react'
 import { useGetPetByIdQuery } from '../services/petsServices';
+import ViewPetDetail from './ViewPetDetail';
 
 const PetDetail = ({route, navigation}) => {
 
@@ -20,7 +21,7 @@ const PetDetail = ({route, navigation}) => {
                                 <AntDesign name="arrowleft" size={24} color="black" />
                             </Pressable>
                         </View>
-                        <Text>{pet.breed}</Text>
+                        <ViewPetDetail pet={pet} />
                     </View>
                 </View>
             )}

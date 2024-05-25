@@ -10,8 +10,6 @@ const InputDate = ({filter = false, handleFilterSubmit = () => {}}) => {
   const dispatch = useDispatch();
   const {petSelected, breedSelected, sizeSelected, necklaceSelected, addPet} = useSelector(state => state.pets.value);
 
-  console.log(addPet);
-
   return (
     <View style={styles.pickerContainer}>
       <DateTimePicker

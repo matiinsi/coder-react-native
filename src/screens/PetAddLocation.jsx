@@ -21,8 +21,8 @@ const PetAddLocation = ({navigation}) => {
       try {
         addPetLocationSchema.validate(addPet.location)
               .then(() => {
-                  setError("");
-                  navigation.navigate("PetAddPhoto");
+                    setError("");
+                    navigation.navigate("PetAddPhoto");
               })
               .catch((error) => {
                   setError(error.message);

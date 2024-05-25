@@ -18,13 +18,13 @@ export const petsApi = createApi({
                     queryParams.push(`orderBy="size"&equalTo="${sizeSelected}"`);
                 }
                 if (petSelected) {
-                    queryParams.push(`orderBy="pet_type"&equalTo="${petSelected}"`);
+                    queryParams.push(`orderBy="petType"&equalTo="${petSelected}"`);
                 }
                 if (necklaceSelected) {
                     queryParams.push(`orderBy="necklace"&equalTo=${necklaceSelected}`);
                 }
                 if (dateLostSelected) {
-                    queryParams.push(`orderBy="date_lost"&equalTo="${dateLostSelected}"`);
+                    queryParams.push(`orderBy="dateLost"&equalTo="${dateLostSelected}"`);
                 }
                 if (countrySelected) {
                     queryParams.push(`orderBy="location/country"&equalTo="${countrySelected}"`);

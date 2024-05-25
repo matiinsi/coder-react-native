@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 export const addPetValues = {
     id: '',
     petType: '',
+    color: '',
     breed: '',
     size: '',
     necklace: '',
@@ -15,5 +16,7 @@ export const addPetValues = {
         city: '',
         address: '',
         postalCode: '',
+        lat: '',
+        lng: ''
     }
 }

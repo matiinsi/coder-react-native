@@ -10,6 +10,7 @@ import DropdownNecklace from '../components/DropdownNecklace';
 import AddButton from '../components/AddButton';
 import InputDate from '../components/InputDate';
 import { addPetInfoSchema } from '../validations/addPetInfoSchema';
+import InputColor from '../components/InputColor';
 
 const PetAddInfo = ({navigation}) => {
 
@@ -66,6 +67,14 @@ const PetAddInfo = ({navigation}) => {
                     <View style={styles.formGroup}>
                         <Text style={styles.titleFormGroup}>Tamaño</Text>
                         <DropdownSizes 
+                            isFocus={isFocus}
+                            setIsFocus={setIsFocus} 
+                        />
+                    </View>
+
+                    <View style={styles.formGroup}>
+                        <Text style={styles.titleFormGroup}>Color</Text>
+                        <InputColor
                             isFocus={isFocus}
                             setIsFocus={setIsFocus} 
                         />

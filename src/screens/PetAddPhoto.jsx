@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'
 import { useSelector, useDispatch } from 'react-redux';
 import { setAddPet } from '../features/pets/petsSlice';
+import { useGetLocationByCityStateAndCountryQuery } from '../services/authServices';
 import AddButton from '../components/AddButton'
 
 const PetAddPhoto = ({navigation}) => {
@@ -14,6 +15,8 @@ const PetAddPhoto = ({navigation}) => {
 
   const {localId} = useSelector(state => state.auth.value);
   const {addPet} = useSelector(state => state.pets.value);
+
+  const {data: locationApi, error: errorLocationApi, isLoading} = useGetLocationByCityStateAndCountryQuery(addPet.location);
 
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
@@ -107,7 +110,12 @@ const PetAddPhoto = ({navigation}) => {
               ...addPet, 
               profileImage: image, 
               userId: localId, 
-              id: uuid.v4()
+              id: uuid.v4(),
+              location: {
+                ...addPet.location,
+                lat: locationApi?.results[0]?.geometry?.lat,
+                lng: locationApi?.results[0]?.geometry?.lng
+              }
             }
           ))
 
@@ -119,35 +127,41 @@ const PetAddPhoto = ({navigation}) => {
 
   return (
     <View style={styles.petContainer}>
-      <ScrollView style={styles.petContentContainer}>
-          <View style={styles.petContentTopContainer}>
-              <Pressable onPress={() => navigation.goBack()}>
-                  <AntDesign name="arrowleft" size={24} color="black" />
-              </Pressable>
-          </View>
-          <View>
-              <Text style={styles.title}>Foto de la Mascota</Text>
-          </View>
-          <View style={styles.row}>
-              {image || addPet?.profileImage ? (
+        <ScrollView style={styles.petContentContainer}>
+            {isLoading && <Text>Cargando...</Text>}
+            {(!isLoading && locationApi) && 
                 <>
-                    <Image source={{ uri: (image) ? image :addPet?.profileImage }} style={styles.image} />
-                    <AddButton title={"Tomar otra foto"} action={pickImage} />
-                    <AddButton title={"Elegir otra foto"} action={selectImage} />
-                    <AddButton title={"Confirmar Imagen"} action={confirmImage} bgColor={colors.green} />
-                </>
-              ) : (
-                <>
-                    <View style={styles.noPhotoContainer}>
-                        <Text>Sin foto...</Text>
+                    <View style={styles.petContentTopContainer}>
+                        <Pressable onPress={() => navigation.goBack()}>
+                            <AntDesign name="arrowleft" size={24} color="black" />
+                        </Pressable>
                     </View>
-                    <AddButton title={"Tomar foto"} action={pickImage} />
-                    <AddButton title={"Elegir foto"} action={selectImage} />
+                    <View>
+                        <Text style={styles.title}>Foto de la Mascota</Text>
+                    </View>
+                    <View style={styles.row}>
+                        {image || addPet?.profileImage ? (
+                            <>
+                                <Image source={{ uri: (image) ? image :addPet?.profileImage }} style={styles.image} />
+                                <AddButton title={"Tomar otra foto"} action={pickImage} />
+                                <AddButton title={"Elegir otra foto"} action={selectImage} />
+                                <AddButton title={"Confirmar Imagen"} action={confirmImage} bgColor={colors.green} />
+                            </>
+                        ) : (
+                            <>
+                                <View style={styles.noPhotoContainer}>
+                                    <Text>Sin foto...</Text>
+                                </View>
+                                <AddButton title={"Tomar foto"} action={pickImage} />
+                                <AddButton title={"Elegir foto"} action={selectImage} />
+                            </>
+                        )}
+                    </View>
                 </>
-              )}
-          </View>
-          {error && <Text style={styles.inputError}>{error}</Text>}
-      </ScrollView>
+            }
+
+            {error && <Text style={styles.inputError}>{error}</Text>}
+        </ScrollView>
     </View>
   )
 }

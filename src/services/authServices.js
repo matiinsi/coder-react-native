@@ -19,7 +19,11 @@ export const authApi = createApi({
                 body: auth
             }),
         }),
+        getLocationByCityStateAndCountry: builder.query({
+            query: ({address, postalCode, city, state, country}) => `https://api.opencagedata.com/geocode/v1/json?q=${address},${postalCode},${city},${state},${country}&key=0d64373f106a4605ba62266e4bb04bd3`,
+        }),
+        
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGetLocationByCityStateAndCountryQuery } = authApi;
