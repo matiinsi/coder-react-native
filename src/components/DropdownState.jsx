@@ -40,12 +40,12 @@ const DropdownState = ({filter = false, isFocus, setIsFocus, handleFilterSubmit 
             valueField="value"
             placeholder={!isFocus ? 'Selecciona' : '...'}
             searchPlaceholder="Buscar..."
-            value={filter ? stateSelected : addPet.location?.state}
+            value={filter ? stateSelected.value : addPet.location?.state}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
                 setIsFocus(false);
-                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, item.value) : handleAddPet(item.value)
+                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, item) : handleAddPet(item.value)
             }}
         />
 

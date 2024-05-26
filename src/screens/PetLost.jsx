@@ -1,15 +1,21 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import { colors } from '../constants/colors'
 import Card from '../components/Card'
 import Filter from '../components/Filter'
 import { useGetPetsQuery } from '../services/petsServices'
-import { useSelector } from 'react-redux'
+import { setLocationUser } from '../features/auth/authSlice'
+import { useSelector, useDispatch } from 'react-redux'
 import ButtonAddPet from '../components/ButtonAddPet'
+import { getLocationUser } from '../helpers/getLocationUser'
+import * as Location from "expo-location"
 
 const PetLost = ({navigation}) => {
 
+    const dispatch = useDispatch();
+
     const {breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected} = useSelector(state => state.pets.value);
+    const { location } = useSelector(state => state.auth.value);
 
     const {data: pets, error, isLoading} = useGetPetsQuery(
         {
@@ -18,10 +24,33 @@ const PetLost = ({navigation}) => {
             petSelected, 
             necklaceSelected, 
             dateLostSelected,
-            countrySelected,
-            stateSelected
+            countrySelected: (countrySelected) ? countrySelected : location.country,
+            stateSelected: (stateSelected) ? stateSelected : location.state
         }
     );
+
+    useEffect(() => {
+        (async () => {
+            try {
+                let { status } = await Location.requestForegroundPermissionsAsync();
+    
+                if (status === "granted") {
+
+                    let locationUser = await Location.getCurrentPositionAsync({})
+                    let locationData = await getLocationUser({lat: locationUser.coords.latitude, lng: locationUser.coords.longitude})
+
+                    dispatch(setLocationUser({
+                        lat: locationUser.coords.latitude,
+                        lng: locationUser.coords.longitude,
+                        country: locationData.country,
+                        state: locationData.state,
+                    }))
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        })()
+    }, [])
 
     return (
         <View style={styles.homeContainer}>

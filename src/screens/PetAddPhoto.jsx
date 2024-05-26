@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'
 import { useSelector, useDispatch } from 'react-redux';
 import { setAddPet } from '../features/pets/petsSlice';
-import { useGetLocationByCityStateAndCountryQuery } from '../services/authServices';
+import { useGetLocationByCityStateAndCountryQuery } from '../services/petsServices';
 import AddButton from '../components/AddButton'
 
 const PetAddPhoto = ({navigation}) => {

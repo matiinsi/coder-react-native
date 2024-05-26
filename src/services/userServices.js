@@ -25,5 +25,5 @@ export const userApi = createApi({
 
 export const { 
     useGetImageProfileAccountQuery,
-    usePostImageProfileAccountMutation
+    usePostImageProfileAccountMutation,
 } = userApi; // Exporto los hooks

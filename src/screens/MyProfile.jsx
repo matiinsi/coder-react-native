@@ -1,11 +1,14 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image} from 'react-native'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { colors } from '../constants/colors'
 import AddButton from '../components/AddButton'
 import { useGetImageProfileAccountQuery } from '../services/userServices';
+import { setUser } from '../features/auth/authSlice'
 
 const MyProfile = ({navigation}) => {
+
+    const dispatch = useDispatch();
 
     const defaultImageProfile = "../../assets/images/defaultProfile.png"
     const {imageCamera, localId} = useSelector(state => state.auth.value);
@@ -14,6 +17,14 @@ const MyProfile = ({navigation}) => {
 
     const lounchCamera = () => {
         navigation.navigate('LaunchCamera');
+    }
+
+    const logout = () => {
+        dispatch(setUser({
+            email: '',
+            idToken: '',
+            localId: '',
+        }));
     }
 
     return (
@@ -27,6 +38,7 @@ const MyProfile = ({navigation}) => {
                 )}
                 <Text style={styles.profileTextName}>Hola @user!</Text>
                 <AddButton title={"Cambiar Imágen"} action={lounchCamera} bgColor={colors.green} />
+                <AddButton title={"Cerrar Sesión"} action={logout} bgColor={colors.red} />
             </View>
         </View>
     )

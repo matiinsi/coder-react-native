@@ -16,12 +16,24 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.miempresa.miapp"
+      "bundleIdentifier": "com.miempresa.miapp",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "We use your location to show nearby places",
+        "NSLocationAlwaysUsageDescription": "We use your location to show nearby places"
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyAf-h2b_Zvmqq3Ttx42jyc5X93sfAttFJM"
+    }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "config": {
+          "googleMaps": {
+            "apiKey": "AIzaSyAf-h2b_Zvmqq3Ttx42jyc5X93sfAttFJM"
+          }
+        }
       }
     },
     "web": {

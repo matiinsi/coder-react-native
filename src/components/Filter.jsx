@@ -5,6 +5,7 @@ import { colors } from '../constants/colors';
 import FilterModal from './FilterModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterLost } from '../features/pets/petsSlice';
+import { setLocationUser } from '../features/auth/authSlice';
 
 const Filter = () => {
 
@@ -26,7 +27,7 @@ const Filter = () => {
                 necklace: necklaceSelected,
                 dateLost: dateLostSelected,
                 country: countrySelected,
-                state: stateSelected
+                state: stateSelected.value
             }
         ));
     }, [breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected]);

@@ -38,7 +38,7 @@ const DropdownSizes = ({filter = false, isFocus, setIsFocus, handleFilterSubmit}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            (filter) ? handleFilterSubmit(breedSelected, item.value, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected) : 
+                            (filter) ? handleFilterSubmit(breedSelected, item.value, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected.value) : 
                             handleAddPet(item.value)
                         }}
                     />

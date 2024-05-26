@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../databases/realtimeDatabase";
+import { apiKeyOpencage } from "../databases/opencageData";
 
 export const petsApi = createApi({
     reducerPath: 'petsApi',
@@ -76,7 +77,10 @@ export const petsApi = createApi({
                 body: pet
             }),
             invalidatesTags: ['pets'],
-        })
+        }),
+        getLocationByCityStateAndCountry: builder.query({
+            query: ({address, postalCode, city, state, country}) => `https://api.opencagedata.com/geocode/v1/json?q=${address},${postalCode},${city},${state},${country}&key=${apiKeyOpencage}`,
+        }),
     })
 }); // Creo la API
 
@@ -87,5 +91,6 @@ export const {
     useGetPetsTypesQuery, 
     useGetPetByIdQuery, 
     usePostPetMutation,
-    usePostImageProfileAccountMutation
+    usePostImageProfileAccountMutation,
+    useGetLocationByCityStateAndCountryQuery
 } = petsApi; // Exporto los hooks

@@ -1,0 +1,1 @@
+export const apiKeyOpencage = "0d64373f106a4605ba62266e4bb04bd3"

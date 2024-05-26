@@ -46,7 +46,7 @@ const DropdownCountry = ({filter = false, isFocus, setIsFocus, handleFilterSubmi
             onBlur={() => setIsFocus(false)}
             onChange={item => {
                 setIsFocus(false);
-                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, item.value, stateSelected) : handleAddPet(item.value)
+                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, necklaceSelected, dateLostSelected, item.value, stateSelected.value) : handleAddPet(item.value)
             }}
         />
 

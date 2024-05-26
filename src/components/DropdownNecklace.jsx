@@ -35,7 +35,7 @@ const DropdownNecklace = ({filter = false, isFocus, setIsFocus, handleFilterSubm
             onBlur={() => setIsFocus(false)}
             onChange={item => {
                 setIsFocus(false);
-                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, item.value, dateLostSelected, countrySelected, stateSelected) : handleAddPet(item.value)
+                (filter) ? handleFilterSubmit(breedSelected, sizeSelected, petSelected, item.value, dateLostSelected, countrySelected, stateSelected.value) : handleAddPet(item.value)
             }}
         /> 
 

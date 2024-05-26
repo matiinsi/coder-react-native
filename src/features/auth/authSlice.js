@@ -7,7 +7,13 @@ export const authSlice = createSlice({
             email: null,
             idToken: null,
             localId: null,
-            imageCamera: null
+            imageCamera: null,
+            location: {
+                lat: -34.603722,
+                lng: -58.381592,
+                state: "Buenos Aires",
+                country: "Argentina"
+            }
         }
     },
     reducers: {
@@ -22,10 +28,13 @@ export const authSlice = createSlice({
         },
         setImageCamera: (state, action) => {
             state.value.imageCamera = action.payload;
+        },
+        setLocationUser : (state, action) => {
+            state.value.location = action.payload;
         }
     }
 });
 
-export const { setUser, cleanUser, setImageCamera } = authSlice.actions;
+export const { setUser, cleanUser, setImageCamera, setLocationUser } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -40,7 +40,7 @@ const DropdownBreeds = ({filter = false, isFocus, setIsFocus, handleFilterSubmit
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            (filter) ? handleFilterSubmit(item.value, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected) : handleAddPet(item.value)
+                            (filter) ? handleFilterSubmit(item.value, sizeSelected, petSelected, necklaceSelected, dateLostSelected, countrySelected, stateSelected.value) : handleAddPet(item.value)
                         }}
                     /> 
                 ) : <Text>Loading...</Text>

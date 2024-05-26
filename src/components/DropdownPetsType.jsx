@@ -38,7 +38,7 @@ const DropdownPetsType = ({filter = false, isFocus, setIsFocus, handleFilterSubm
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             setIsFocus(false);
-                            (filter) ? handleFilterSubmit(breedSelected, sizeSelected, item.value, necklaceSelected, dateLostSelected, countrySelected, stateSelected) : handleAddPet(item.value)
+                            (filter) ? handleFilterSubmit(breedSelected, sizeSelected, item.value, necklaceSelected, dateLostSelected, countrySelected, stateSelected.value) : handleAddPet(item.value)
                         }}
                     />
                 ) : <Text>Loading...</Text>
