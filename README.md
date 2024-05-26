@@ -1,4 +1,4 @@
-## PetSerch APP ##
+## PetSearch APP ##
 
 PetSerch es una aplicación móvil desarrollada en React Native que permite a los usuarios buscar perros perdidos en su área local. Los usuarios pueden registrarse en la aplicación y ver una lista de perros perdidos cercanos a su ubicación actual. La aplicación solicitará permisos para acceder a la ubicación del dispositivo del usuario con el fin de proporcionar resultados precisos.
 
