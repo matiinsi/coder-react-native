@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
 import React from 'react'
@@ -14,7 +14,7 @@ const PetDetail = ({route, navigation}) => {
     return (
         <>
             {(!isLoading && pet) && (
-                <View style={styles.petContainer}>
+                <ScrollView style={styles.petContainer}>
                     <View style={styles.petContentContainer}>
                         <View style={styles.petContentTopContainer}>
                             <Pressable onPress={() => navigation.goBack()}>
@@ -23,7 +23,7 @@ const PetDetail = ({route, navigation}) => {
                         </View>
                         <ViewPetDetail pet={pet} />
                     </View>
-                </View>
+                </ScrollView>
             )}
         </>
 

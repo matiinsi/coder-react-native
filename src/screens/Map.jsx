@@ -25,7 +25,6 @@ const Map = ({navigation}) => {
     }
   );
 
-
   const handleMarkerPress = (id) => {
     navigation.navigate('PetScreen', { screen: 'PetDetail', params: { id } });
   };
@@ -33,11 +32,11 @@ const Map = ({navigation}) => {
   useEffect(() => {
     if (location || stateSelected && mapRef.current) {
       mapRef.current.animateToRegion({
-        latitude: (stateSelected) ? stateSelected.lat : location.lat,
-        longitude: (stateSelected) ? stateSelected.lng : location.lng,
+        latitude: (stateSelected) ? stateSelected?.lat : location?.lat,
+        longitude: (stateSelected) ? stateSelected?.lng : location?.lng,
         latitudeDelta: 0.300,
         longitudeDelta: 0.300,
-      }, 1000); // 1000ms de animación
+      });
     }
   }, [location, stateSelected]);
 
@@ -48,22 +47,22 @@ const Map = ({navigation}) => {
             ref={mapRef}
             style={styles.map}
             initialRegion={{
-              latitude: (stateSelected) ? stateSelected.lat : location.lat,
-              longitude: (stateSelected) ? stateSelected.lng : location.lng,
+              latitude: (stateSelected) ? stateSelected?.lat : location?.lat,
+              longitude: (stateSelected) ? stateSelected?.lng : location?.lng,
               latitudeDelta: 0.300,
               longitudeDelta: 0.300,
             }}
             mapType="standard"
           >
-            {pets.map((pet) => (
+            {pets && pets?.map((pet) => (
               <Marker
-                key={pet.id}
-                coordinate={{ latitude: pet.location.lat, longitude: pet.location.lng }}
-                title={pet.breed}
-                onPress={ () => handleMarkerPress(pet.id) }
-                image={(pet.petType === 'perro') ? markerIconDog : markerIconCat}
-                style={{ width: 40, height: 40 }}
-              />
+                  key={pet.id}
+                  coordinate={{ latitude: pet?.location?.lat, longitude: pet?.location?.lng }}
+                  title={pet?.breed}
+                  onPress={ () => handleMarkerPress(pet?.id) }
+                  image={(pet.petType === 'perro') ? markerIconDog : markerIconCat}
+                  style={{ width: 40, height: 40 }}
+              /> 
             ))}
           </MapView>
         : <Text>Loading...</Text>
