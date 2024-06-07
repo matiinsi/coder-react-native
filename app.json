@@ -20,10 +20,7 @@
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We use your location to show nearby places",
         "NSLocationAlwaysUsageDescription": "We use your location to show nearby places"
-      },
-      "config": {
-        "googleMapsApiKey": "AIzaSyAf-h2b_Zvmqq3Ttx42jyc5X93sfAttFJM"
-    }
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -34,10 +31,22 @@
             "apiKey": "AIzaSyAf-h2b_Zvmqq3Ttx42jyc5X93sfAttFJM"
           }
         }
-      }
+      },
+      "package": "com.petsearch.miapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d4348fde-aeff-43b2-b66b-7295eb427a08"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d4348fde-aeff-43b2-b66b-7295eb427a08"
     }
   }
 }
